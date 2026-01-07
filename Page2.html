@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BunkLogic – Goal Matrix</title>
+
+<style>
+/* ---------- GLOBAL ---------- */
+*{box-sizing:border-box;font-family:Segoe UI,sans-serif}
+body{
+    margin:0;min-height:100vh;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    display:flex;justify-content:center;align-items:center;
+    position:relative;
+}
+
+/* ---------- CARD ---------- */
+.container{
+    background:#fff;width:90%;max-width:500px;
+    padding:28px;border-radius:14px;
+    box-shadow:0 18px 35px rgba(0,0,0,.25);
+    text-align:center;
+}
+
+/* ---------- LOGO ---------- */
+.logo{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:8px;
+}
+.logo-icon{
+    width:46px;height:46px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:#fff;
+    font-weight:800;
+    font-size:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-right:10px;
+}
+.logo-text{
+    font-size:26px;
+    font-weight:800;
+    color:#667eea;
+}
+.tagline{
+    font-size:13px;
+    color:#777;
+    margin-bottom:18px;
+}
+
+/* ---------- CONTENT ---------- */
+.step{
+    color:#666;
+    font-size:14px;
+    margin-bottom:10px
+}
+h2{
+    margin:0 0 10px 0;
+}
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font-size:14px
+}
+button{
+    width:100%;
+    padding:12px;
+    background:#667eea;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    font-size:15px;
+    cursor:pointer;
+    margin-top:8px;
+}
+button:hover{
+    background:#5a67d8
+}
+.back{
+    background:#999;
+}
+.back:hover{
+    background:#777;
+}
+
+/* ---------- WATERMARK ---------- */
+.watermark{
+    position:fixed;
+    bottom:10px;
+    right:12px;
+    font-size:11px;
+    color:rgba(255,255,255,0.7);
+    letter-spacing:0.5px;
+    user-select:none;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:480px){
+    .logo-text{font-size:22px}
+    .logo-icon{width:40px;height:40px;font-size:18px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LOGO -->
+    <div class="logo">
+        <div class="logo-icon">BL</div>
+        <div class="logo-text">BunkLogic</div>
+    </div>
+    <div class="tagline">Smart Attendance Analyzer & Bunk Planner</div>
+
+    <div class="step">Step 2 of 4 • Goal Matrix</div>
+    <h2>Attendance Goal</h2>
+
+    <input type="number" id="minAttendance" placeholder="Minimum Attendance %" value="80">
+    <input type="number" id="weeks" placeholder="Total Semester Weeks">
+
+    <button onclick="nextPage()">Next ➡</button>
+    <button class="back" onclick="history.back()">⬅ Back</button>
+</div>
+
+<!-- WATERMARK -->
+<div class="watermark">SAMBU&nbsp;VIVEK&nbsp;CHAITANYA</div>
+
+<script>
+function nextPage(){
+    const min = document.getElementById("minAttendance").value;
+    const weeks = document.getElementById("weeks").value;
+
+    if(min === "" || weeks === ""){
+        alert("Please fill all details");
+        return;
+    }
+
+    localStorage.setItem("minAttendance", min);
+    localStorage.setItem("weeks", weeks);
+
+    window.location.href = "page3.html";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BunkLogic – Subjects & Absences</title>
+
+<style>
+*{box-sizing:border-box;font-family:Segoe UI,sans-serif}
+body{
+    margin:0;min-height:100vh;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    display:flex;justify-content:center;align-items:center;
+}
+.container{
+    background:#fff;width:95%;max-width:700px;
+    padding:28px;border-radius:14px;
+    box-shadow:0 18px 35px rgba(0,0,0,.25);
+}
+.logo{
+    display:flex;justify-content:center;align-items:center;
+    margin-bottom:6px
+}
+.logo-icon{
+    width:42px;height:42px;border-radius:50%;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:#fff;font-weight:800;font-size:18px;
+    display:flex;align-items:center;justify-content:center;
+    margin-right:8px
+}
+.logo-text{
+    font-size:24px;font-weight:800;color:#667eea
+}
+.tagline{text-align:center;font-size:13px;color:#777;margin-bottom:14px}
+.step{text-align:center;color:#666;font-size:14px;margin-bottom:12px}
+input,button{
+    width:100%;padding:10px;margin:8px 0;
+    border-radius:8px;font-size:14px
+}
+input{border:1px solid #ccc}
+button{
+    background:#667eea;color:#fff;border:none;cursor:pointer
+}
+button:hover{background:#5a67d8}
+.back{background:#999}
+.back:hover{background:#777}
+.subject-box{
+    border:1px solid #eee;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:12px
+}
+.watermark{
+    position:fixed;bottom:10px;right:12px;
+    font-size:11px;color:rgba(255,255,255,.7);
+    user-select:none
+}
+@media(max-width:480px){
+    .logo-text{font-size:20px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        <div class="logo-icon">BL</div>
+        <div class="logo-text">BunkLogic</div>
+    </div>
+    <div class="tagline">Smart Attendance Analyzer & Bunk Planner</div>
+
+    <div class="step">Step 3 of 4 • Subjects & Absences</div>
+
+    <input type="number" id="numSubjects" placeholder="Number of Subjects">
+    <button onclick="createSubjects()">Add Subjects</button>
+
+    <div id="subjects"></div>
+
+    <button onclick="goNext()">Analyze ➡</button>
+    <button class="back" onclick="history.back()">⬅ Back</button>
+</div>
+
+<div class="watermark">SAMBU&nbsp;VIVEK&nbsp;CHAITANYA</div>
+
+<script>
+function createSubjects(){
+    const n = document.getElementById("numSubjects").value;
+    const box = document.getElementById("subjects");
+    box.innerHTML = "";
+
+    if(!n || n <= 0){
+        alert("Enter a valid number of subjects");
+        return;
+    }
+
+    for(let i=1;i<=n;i++){
+        box.innerHTML += `
+        <div class="subject-box">
+            <strong>Subject ${i}</strong>
+            <input class="name" placeholder="Subject Name">
+            <input class="theory" type="number" placeholder="Theory Hours / Week">
+            <input class="lab" type="number" placeholder="Lab Hours / Week">
+            <input class="absent" type="number" placeholder="Already Absent Hours">
+        </div>
+        `;
+    }
+}
+
+function goNext(){
+    const names = document.querySelectorAll(".name");
+    const theory = document.querySelectorAll(".theory");
+    const lab = document.querySelectorAll(".lab");
+    const absent = document.querySelectorAll(".absent");
+
+    let subjects = [];
+
+    for(let i=0;i<names.length;i++){
+        if(
+            names[i].value.trim()==="" ||
+            theory[i].value==="" ||
+            lab[i].value==="" ||
+            absent[i].value===""
+        ){
+            alert("Please fill all subject details");
+            return;
+        }
+
+        subjects.push({
+            name: names[i].value,
+            weekly: Number(theory[i].value) + Number(lab[i].value),
+            absent: Number(absent[i].value)
+        });
+    }
+
+    localStorage.setItem("subjects", JSON.stringify(subjects));
+    window.location.href = "page4.html";
+}
+</script>
+
+</body>
+</html>
